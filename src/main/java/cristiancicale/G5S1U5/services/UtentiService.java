@@ -5,6 +5,7 @@ import cristiancicale.G5S1U5.exceptions.NotFoundException;
 import cristiancicale.G5S1U5.exceptions.ValidationException;
 import cristiancicale.G5S1U5.repositories.UtentiRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.List;
 public class UtentiService {
     private final UtentiRepository utentiRepository;
 
+    @Autowired
     public UtentiService(UtentiRepository utentiRepository) {
         this.utentiRepository = utentiRepository;
     }
 
-    public List<Utente> findAll() {
+    public List<Utente> trovaTutti() {
         return this.utentiRepository.findAll();
     }
 
@@ -27,9 +29,9 @@ public class UtentiService {
     }
 
     public void salvaNuovoUtente(Utente nuovoUtente) {
-        if (this.utentiRepository.existsByEmail(nuovoUtente.getEmail()))
-            throw new ValidationException("Email " + nuovoUtente.getEmail() + " già in uso!");
+        if (this.utentiRepository.existsByUsername(nuovoUtente.getUsername()))
+            throw new ValidationException("Username " + nuovoUtente.getUsername() + " già in uso!");
         this.utentiRepository.save(nuovoUtente);
-        log.info("L'utente con email {} è stato salvato!", nuovoUtente.getUsername());
+        log.info("L'utente con username {} è stato salvato!", nuovoUtente.getUsername());
     }
 }
