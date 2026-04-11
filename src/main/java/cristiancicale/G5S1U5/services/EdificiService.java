@@ -37,4 +37,15 @@ public class EdificiService {
         this.edificiRepository.save(nuovoEdificio);
         log.info("L'edificio con id {} è stato salvato!", nuovoEdificio.getId());
     }
+
+    public Edificio aggiornaEdificio(Long id, Edificio nuovoEdificio) {
+
+        Edificio esistente = trovaPerId(id);
+
+        esistente.setNome(nuovoEdificio.getNome());
+        esistente.setIndirizzo(nuovoEdificio.getIndirizzo());
+        esistente.setCitta(nuovoEdificio.getCitta());
+
+        return edificiRepository.save(esistente);
+    }
 }

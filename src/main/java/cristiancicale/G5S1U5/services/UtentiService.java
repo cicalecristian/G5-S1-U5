@@ -34,4 +34,35 @@ public class UtentiService {
         this.utentiRepository.save(nuovoUtente);
         log.info("L'utente con username {} è stato salvato!", nuovoUtente.getUsername());
     }
+
+    public Utente aggiornaUtente(Long id, Utente nuovoUtente) {
+
+        Utente esistente = trovaPerId(id);
+
+        if (!esistente.getUsername().equals(nuovoUtente.getUsername())) {
+
+            boolean exists = utentiRepository.existsByUsername(nuovoUtente.getUsername());
+
+            if (exists) {
+                throw new ValidationException("L'username " + nuovoUtente.getUsername() + "già esiste!");
+            }
+
+            esistente.setUsername(nuovoUtente.getUsername());
+        }
+
+        esistente.setNomeCompleto(nuovoUtente.getNomeCompleto());
+
+        if (!esistente.getEmail().equals(nuovoUtente.getEmail())) {
+
+            boolean exists = utentiRepository.existsByEmail(nuovoUtente.getEmail());
+
+            if (exists) {
+                throw new ValidationException("L'email " + nuovoUtente.getEmail() + "già esiste!");
+            }
+
+            esistente.setEmail(nuovoUtente.getEmail());
+        }
+
+        return utentiRepository.save(nuovoUtente);
+    }
 }
