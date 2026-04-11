@@ -4,14 +4,16 @@ import cristiancicale.G5S1U5.enums.TipoPostazione;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "postazioni")
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"prenotazioni", "edificio"})
 public class Postazione {
 
     @Id
@@ -36,14 +38,19 @@ public class Postazione {
     @JoinColumn(name = "edificio_id")
     private Edificio edificio;
 
-    @OneToMany(mappedBy = "postazione", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "postazione")
     private List<Prenotazione> prenotazioni;
 
-    public Postazione(String descrizione, TipoPostazione tipo, int maxOccupanti, Edificio edificio, List<Prenotazione> prenotazioni) {
+    public Postazione(String descrizione, TipoPostazione tipo, int maxOccupanti, Edificio edificio) {
         this.descrizione = descrizione;
         this.tipo = tipo;
         this.maxOccupanti = maxOccupanti;
         this.edificio = edificio;
-        this.prenotazioni = prenotazioni;
+        this.prenotazioni = new ArrayList<>();
+    }
+
+    @PrePersist
+    private void generaCodice() {
+        this.codice = "COD-" + UUID.randomUUID().toString().substring(0, 8);
     }
 }

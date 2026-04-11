@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "prenotazioni")
 public class Utente {
 
     @Id
@@ -33,10 +34,10 @@ public class Utente {
     @OneToMany(mappedBy = "utente")
     private List<Prenotazione> prenotazioni;
 
-    public Utente(String username, String nomeCompleto, String email, List<Prenotazione> prenotazioni) {
+    public Utente(String username, String nomeCompleto, String email) {
         this.username = username;
         this.nomeCompleto = nomeCompleto;
         this.email = email;
-        this.prenotazioni = prenotazioni;
+        this.prenotazioni = new ArrayList<>();
     }
 }

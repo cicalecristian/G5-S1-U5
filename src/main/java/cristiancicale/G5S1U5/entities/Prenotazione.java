@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"utente", "postazione"})
 public class Prenotazione {
 
     @Id

@@ -30,7 +30,7 @@ public class PrenotazioniService {
         this.postazioniService = postazioniService;
     }
 
-    public Prenotazione prenotazione(Long utenteId, Long postazioneId, LocalDate data) {
+    public Prenotazione salvaNuovaPrenotazione(Long utenteId, Long postazioneId, LocalDate data) {
 
         if (data.isBefore(LocalDate.now())) {
             throw new ValidationException("Non puoi prenotare una data passata");
@@ -39,13 +39,13 @@ public class PrenotazioniService {
         Utente utente = utentiService.trovaPerId(utenteId);
         Postazione postazione = postazioniService.trovaPerId(postazioneId);
 
-        if (prenotazioniRepository.existsByUtenteAndData(utente, data)) {
+        if (prenotazioniRepository.existsByUtenteAndDataPrenotazione(utente, data)) {
             throw new UtenteGiaPrenotatoException(
                     "L'utente ha già una prenotazione per questa data"
             );
         }
 
-        if (prenotazioniRepository.existsByPostazioneAndData(postazione, data)) {
+        if (prenotazioniRepository.existsByPostazioneAndDataPrenotazione(postazione, data)) {
             throw new PostazioneOccupataException(
                     "La postazione è già occupata per questa data"
             );

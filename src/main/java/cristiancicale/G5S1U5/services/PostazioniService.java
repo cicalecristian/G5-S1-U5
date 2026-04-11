@@ -6,6 +6,7 @@ import cristiancicale.G5S1U5.exceptions.ValidationException;
 import cristiancicale.G5S1U5.repositories.PostazioniRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,10 +30,12 @@ public class PostazioniService {
     }
 
     public void salvaNuovaPostazione(Postazione nuovaPostazione) {
-        if (this.postazioniRepository.existsByCodice(nuovaPostazione.getCodice()))
-            throw new ValidationException("Postazione " + nuovaPostazione.getCodice() + "già esistente");
-        this.postazioniRepository.save(nuovaPostazione);
-        log.info("La postazione con codice {} è stata salvata!", nuovaPostazione.getCodice());
+        try {
+            postazioniRepository.save(nuovaPostazione);
+            log.info("Postazione creata con codice {}", nuovaPostazione.getCodice());
+        } catch (DataIntegrityViolationException ex) {
+            throw new ValidationException("Codice postazione già esistente, riprova");
+        }
     }
 
     public Postazione aggiornaPostazione(Long id, Postazione nuovaPostazione) {
