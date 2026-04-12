@@ -64,6 +64,17 @@ public class Runner implements CommandLineRunner {
 //        log.info("Utenti: {}", utenti);
 
         List<Prenotazione> prenotazioni = prenotazioniService.trovaTutte();
-        log.info("Prenotazioni: {}", prenotazioni);
+//        log.info("Prenotazioni: {}", prenotazioni);
+
+//        this.edificiService.aggiornaEdificio(1L, new Edificio("Epicode", "Via Milano", "Milano"));
+
+        Postazione p2 = new Postazione("sviluppo sistemi operativi", TipoPostazione.OPENSPACE, 4, e1FromDB);
+//        this.postazioniService.salvaNuovaPostazione(p2);
+
+        Postazione p2FromDB = this.postazioniService.trovaPerId(2L);
+
+//        this.postazioniService.aggiornaPostazione(2L, new Postazione("a disposizione del cliente", TipoPostazione.SALA_RIUNIONI, 2, e1FromDB));
+
+//        this.postazioniService.eliminaPostazione(2L);
     }
 }
