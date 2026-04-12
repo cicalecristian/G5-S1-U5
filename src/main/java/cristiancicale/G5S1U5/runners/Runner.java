@@ -37,7 +37,9 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        Edificio e1 = new Edificio("CapGemini", "via Roma 170", "Napoli");
+        // CREAZIONE TABELLE con TROVA ID
+
+        Edificio e1 = new Edificio("CapGemini", "via Roma 170", "Napoli");
 //        this.edificiService.salvaNuovoEdificio(e1);
 
         Edificio e1FromDB = this.edificiService.trovaPerId(1L);
@@ -45,14 +47,19 @@ public class Runner implements CommandLineRunner {
         Postazione p1 = new Postazione("sviluppo siti web", TipoPostazione.PRIVATO, 3, e1FromDB);
 //        this.postazioniService.salvaNuovaPostazione(p1);
 
-        Postazione p1FromDB = this.postazioniService.trovaPerId(1L);
+//        Postazione p1FromDB = this.postazioniService.trovaPerId(1L);
 
         Utente u1 = new Utente("cristiancicale05", "Cristian Cicale", "cricica05@gmail.com");
 //        this.utentiService.salvaNuovoUtente(u1);
 
         Utente u1FromDB = this.utentiService.trovaPerId(1L);
 
+        Utente u2 = new Utente("marco91", "Marco Rossi", "marco91@gmail.com");
+//        this.utentiService.salvaNuovoUtente(u2);
+
 //        prenotazioniService.salvaNuovaPrenotazione(1L, 1L, LocalDate.of(2026, 5, 20));
+
+        // TROVA TUTTI GLI ELEMENTI DELLA TABELLA
 
         List<Edificio> edifici = edificiService.trovaTutti();
 //        log.info("Edifici: {}", edifici);
@@ -66,15 +73,44 @@ public class Runner implements CommandLineRunner {
         List<Prenotazione> prenotazioni = prenotazioniService.trovaTutte();
 //        log.info("Prenotazioni: {}", prenotazioni);
 
+        // TESTING DI AGGIORNAMENTO ED ELIMINAZIONE
+
 //        this.edificiService.aggiornaEdificio(1L, new Edificio("Epicode", "Via Milano", "Milano"));
 
         Postazione p2 = new Postazione("sviluppo sistemi operativi", TipoPostazione.OPENSPACE, 4, e1FromDB);
 //        this.postazioniService.salvaNuovaPostazione(p2);
 
-        Postazione p2FromDB = this.postazioniService.trovaPerId(2L);
+//        Postazione p2FromDB = this.postazioniService.trovaPerId(2L);
 
 //        this.postazioniService.aggiornaPostazione(2L, new Postazione("a disposizione del cliente", TipoPostazione.SALA_RIUNIONI, 2, e1FromDB));
 
 //        this.postazioniService.eliminaPostazione(2L);
+
+//        this.utentiService.aggiornaUtente(1L, new Utente("cristian005", "Cristian Cicale", "cristian2005@gmail.com"));
+
+//        List<Prenotazione> prenotazioniPerUtente = prenotazioniService.trovaPerUtente(1L);
+//        log.info("Prenotazioni per utente: {}", prenotazioniPerUtente);
+
+//        this.prenotazioniService.eliminaPrenotazione(1L);
+
+        // TESTING ERRORI PRENOTAZIONE
+
+//        try {
+//            prenotazioniService.salvaNuovaPrenotazione(1L, 1L, LocalDate.of(2026, 2, 20));
+//        } catch (ValidationException e) {
+//            System.out.println("ERRORE ATTESO: " + e.getMessage());
+//        }
+
+//        try {
+//            prenotazioniService.salvaNuovaPrenotazione(1L, 1L, LocalDate.of(2026, 5, 20));
+//        } catch (UtenteGiaPrenotatoException e) {
+//            System.out.println("ERRORE ATTESO: " + e.getMessage());
+//        }
+
+//        try {
+//            prenotazioniService.salvaNuovaPrenotazione(3L, 1L, LocalDate.of(2026, 5, 20));
+//        } catch (PostazioneOccupataException e) {
+//            System.out.println("ERRORE ATTESO: " + e.getMessage());
+//        }
     }
 }

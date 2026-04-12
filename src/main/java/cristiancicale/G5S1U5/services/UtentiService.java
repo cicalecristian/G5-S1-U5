@@ -63,6 +63,6 @@ public class UtentiService {
             esistente.setEmail(nuovoUtente.getEmail());
         }
 
-        return utentiRepository.save(nuovoUtente);
+        return utentiRepository.save(esistente);
     }
 }
